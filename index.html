@@ -9,15 +9,54 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>html{scroll-behavior:smooth}html,body{margin:0;background:#0A0A0A;color:#F2F2F2}a{color:#F2F2F2;text-decoration:none}a:hover{color:#8C8C8C}::selection{background:#F2F2F2;color:#0A0A0A}</style>
+<style>
+html{scroll-behavior:smooth}
+html,body{margin:0;background:#0A0A0A;color:#F2F2F2}
+a{color:#F2F2F2;text-decoration:none}
+a:hover{color:#8C8C8C}
+::selection{background:#F2F2F2;color:#0A0A0A}
+.navbar{
+  position:fixed;top:0;left:0;right:0;z-index:10;
+  display:grid;
+  grid-template-columns:auto 1fr;
+  align-items:center;
+  gap:24px;
+  padding:22px 4vw;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  mix-blend-mode:difference;
+  transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);
+}
+.navbar-logo{display:flex;align-items:center}
+.navbar-links{
+  display:grid;
+  grid-auto-flow:column;
+  gap:28px;
+  justify-content:end;
+}
+@media(max-width:700px){
+  .navbar{grid-template-columns:1fr;justify-items:start;gap:14px}
+  .navbar-links{
+    grid-auto-flow:row;
+    grid-template-columns:repeat(2,auto);
+    justify-content:start;
+    gap:10px 20px;
+  }
+}
+@media(max-width:360px){
+  .navbar-links{grid-template-columns:repeat(1,auto)}
+}
+</style>
 </head>
 <body>
 <div id="root" style="position:relative;background:#0A0A0A;color:#F2F2F2;font-family:'Archivo',sans-serif;overflow-x:clip">
 <canvas id="canvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;display:block;pointer-events:none"></canvas>
 
-<header id="header" style="position:fixed;top:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:22px 4vw;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;mix-blend-mode:difference;transition:transform 0.5s cubic-bezier(0.22,1,0.36,1)">
-<a href="#top" style="display:flex;align-items:center"><img src="assets/ibra-dev-logo-white.png" alt="ibra dev" style="height:26px;width:auto;display:block"></a>
-<nav style="display:flex;gap:28px;flex-wrap:wrap;justify-content:flex-end">
+<header id="header" class="navbar">
+<a href="#top" class="navbar-logo"><img src="assets/ibra-dev-logo-white.png" alt="ibra dev" style="height:26px;width:auto;display:block"></a>
+<nav class="navbar-links">
 <a href="#work">Work</a>
 <a href="#about">About</a>
 <a href="#skills">Skills</a>
