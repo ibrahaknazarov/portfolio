@@ -36,14 +36,31 @@ a:hover{color:#8C8C8C}
   gap:28px;
   justify-content:end;
 }
+.navbar-toggle{
+  display:none;
+  width:36px;height:36px;
+  border:1px solid #F2F2F2;
+  border-radius:10px;
+  background:none;
+  color:#F2F2F2;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  justify-self:end;
+}
+.navbar-toggle svg{width:16px;height:16px;display:block}
 @media(max-width:700px){
-  .navbar{grid-template-columns:1fr;justify-items:start;gap:14px}
+  .navbar{grid-template-columns:1fr auto;justify-items:start;gap:14px}
+  .navbar-toggle{display:flex}
   .navbar-links{
+    display:none;
     grid-auto-flow:row;
     grid-template-columns:repeat(2,auto);
     justify-content:start;
     gap:10px 20px;
+    grid-column:1/-1;
   }
+  .navbar-links.open{display:grid}
 }
 @media(max-width:360px){
   .navbar-links{grid-template-columns:repeat(1,auto)}
@@ -56,7 +73,10 @@ a:hover{color:#8C8C8C}
 
 <header id="header" class="navbar">
 <a href="#top" class="navbar-logo"><img src="assets/ibra-dev-logo-white.png" alt="ibra dev" style="height:26px;width:auto;display:block"></a>
-<nav class="navbar-links">
+<button type="button" id="navToggle" class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+</button>
+<nav id="navLinks" class="navbar-links">
 <a href="#work">Work</a>
 <a href="#about">About</a>
 <a href="#skills">Skills</a>
@@ -199,6 +219,19 @@ a:hover{color:#8C8C8C}
     C.mouse.tx = e.clientX / innerWidth * 2 - 1;
     C.mouse.ty = e.clientY / innerHeight * 2 - 1;
   });
+
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  if (navToggle && navLinks) {
+    navToggle.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', String(open));
+    });
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    }));
+  }
 
   setupReveals();
   C.raf = requestAnimationFrame(function loop(now) { if (!C.alive) return; tick(now); C.raf = requestAnimationFrame(loop); });
